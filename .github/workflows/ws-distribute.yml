@@ -42,4 +42,15 @@ jobs:
           python build/all.py
       - name: Run clutz
         run: |
-          clutz --closure_env BROWSER --externs shaka/shaka-player.compiled.externs.js shaka/externs/shaka/*.js -o ./out.d.ts
+          clutz --closure_env BROWSER --externs shaka/dist/shaka-player.compiled.externs.js shaka/externs/shaka/*.js -o ./out.d.ts
+          node shaka-deps-shaka.js
+      - name: Pack
+        working-directory: shaka
+        run: |
+          npm pack
+      - name: Archive artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ github.event.inputs.tag }}
+          path: |
+            shaka/shaka-player-${{ github.event.inputs.tag }}.tgz
