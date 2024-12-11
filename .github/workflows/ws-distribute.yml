@@ -2,7 +2,7 @@ name: Distribute (WebStream)
 on: 
   workflow_dispatch:
     inputs:
-      tags:
+      tag:
         description: input shaka tag
         required: true
         type: string
@@ -35,7 +35,7 @@ jobs:
         with:
           repository: shaka-project/shaka-player
           path: shaka
-          ref: refs/tags/${inputs.tags}
+          ref: refs/tags/${{ github.event.inputs.tag }}
       - name: Build shaka
         working-directory: shaka
         run: |
