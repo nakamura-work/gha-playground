@@ -43,10 +43,16 @@ jobs:
       - name: Run clutz
         run: |
           clutz --closure_env BROWSER --externs shaka/dist/shaka-player.compiled.externs.js shaka/externs/shaka/*.js -o ./out.d.ts
-          node shaka-deps-shaka.js
+      - name: Archive artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ github.event.inputs.tag }}-out.d.ts
+          path: |
+            out.d.ts
       - name: Pack
         working-directory: shaka
         run: |
+          node shaka-deps-shaper.js
           npm pack
       - name: Archive artifact
         uses: actions/upload-artifact@v4
