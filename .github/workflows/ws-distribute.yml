@@ -47,11 +47,12 @@ jobs:
       - name: Pack
         working-directory: shaka
         run: |
+          cat package.json | jq '. |= .+{"types": "shaka-player.d.ts"}' > package.json.tmp
+          mv package.json.tmp package.json
           npm pack
-          ls
       - name: Archive artifact
         uses: actions/upload-artifact@v4
         with:
           name: ${{ github.event.inputs.tag }}
           path: |
-            shaka/shaka-player-${{ github.event.inputs.tag }}.tgz
+            shaka/shaka-player-*.tgz
