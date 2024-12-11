@@ -1,0 +1,42 @@
+name: Distribute (WebStream)
+on: 
+  workflow_dispatch:
+    inputs:
+      tags:
+        description: input shaka tag
+        required: true
+        type: string
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      TZ: 'Asia/Tokyo'
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v4
+      - name: Dependencies
+        run: |
+          apt-get update
+          apt-get install -y openjdk-8-jdk unzip nodejs curl
+      - name: Setup clutz
+        run: |
+          pushd /tmp
+          curl -LO https://github.com/angular/clutz/archive/stable.zip
+          unzip stable.zip
+          cd clutz-stable
+          npm install
+          LANG=en_US.utf8 ./gradlew build -x test installDist
+          cd build/distributions
+          tar -C /opt -xvf clutz-stable-1.0.tar
+          echo "/opt/clutz-stable-1.0/bin" >> $GITHUB_PATH
+          popd
+      - name: Run clutz
+        working-directory: workspaces/holly
+        run: |
+          clutz --version
+      - name: Checkout shaka
+        uses: actions/checkout@v4
+        with:
+          repository: shaka-project/shaka-player
+          path: shaka
+          ref: refs/tags/${inputs.tags}
