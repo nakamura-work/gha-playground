@@ -31,7 +31,6 @@ jobs:
           echo "/opt/clutz-stable-1.0/bin" >> $GITHUB_PATH
           popd
       - name: Run clutz
-        working-directory: workspaces/holly
         run: |
           clutz --version
       - name: Checkout shaka
