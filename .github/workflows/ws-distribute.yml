@@ -30,12 +30,17 @@ jobs:
           tar -C /opt -xvf clutz-stable-1.0.tar
           echo "/opt/clutz-stable-1.0/bin" >> $GITHUB_PATH
           popd
-      - name: Run clutz
-        run: |
-          clutz --version
       - name: Checkout shaka
         uses: actions/checkout@v4
         with:
           repository: shaka-project/shaka-player
           path: shaka
           ref: refs/tags/${inputs.tags}
+      - name: Build shaka
+        working-directory: shaka
+        run: |
+          python build/gendeps.py
+          python build/build.py
+      - name: Run clutz
+        run: |
+          clutz --closure_env BROWSER --externs shaka/shaka-player.compiled.externs.js shaka/externs/shaka/*.js -o ./out.d.ts
