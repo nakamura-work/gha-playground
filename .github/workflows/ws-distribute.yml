@@ -39,7 +39,7 @@ jobs:
       - name: Build shaka
         working-directory: shaka
         run: |
-          python build/all.py +@complete -@networking
+          python build/all.py
       - name: Generate type definitions
         run: |
           clutz --closure_env BROWSER --externs shaka/dist/shaka-player.compiled.externs.js shaka/externs/shaka/*.js -o ./out.d.ts
