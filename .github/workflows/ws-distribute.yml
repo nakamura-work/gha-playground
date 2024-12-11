@@ -39,8 +39,7 @@ jobs:
       - name: Build shaka
         working-directory: shaka
         run: |
-          python build/gendeps.py
-          python build/build.py
+          python build/all.py
       - name: Run clutz
         run: |
           clutz --closure_env BROWSER --externs shaka/shaka-player.compiled.externs.js shaka/externs/shaka/*.js -o ./out.d.ts
