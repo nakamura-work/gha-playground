@@ -11,12 +11,12 @@ jobs:
     runs-on: ubuntu-latest
     env:
       TZ: 'Asia/Tokyo'
-      BUILD_NAME: ${{ github.event.inputs.BUILD_NAME }}
+      ENV_BUILD_NAME: ${{ github.event.inputs.BUILD_NAME }}
     steps:
       - name: echo via env
         run: |
           echo ${{ github.event.inputs.BUILD_NAME }} > via_env.txt
-          echo $BUILD_NAME
+          echo $ENV_BUILD_NAME
       - name: echo context
         run: |
           echo ${{ github.event.inputs.BUILD_NAME }} > via_context.txt
