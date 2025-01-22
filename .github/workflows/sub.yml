@@ -15,10 +15,12 @@ jobs:
     steps:
       - name: echo via env
         run: |
-          echo $TAG > tag.txt
+          echo ${{ github.event.inputs.tag }} > via_env.txt
+          echo $TAG
       - name: echo tag
         run: |
-          echo ${{ github.event.inputs.tag }} > tag.txt
+          echo ${{ github.event.inputs.tag }} > via_context.txt
+          echo ${{ github.event.inputs.tag }}
       - name: Archive artifact
         uses: actions/upload-artifact@v4
         with:
