@@ -7,7 +7,7 @@ jobs:
   callsub:
     uses: ./.github/workflows/sub.yml
     with:
-      buildname: 'STATIC STRING' # ${{ github.ref_name }}
+      buildname: ${{ github.ref_name }}
   build:
     needs: callsub
     runs-on: ubuntu-latest
