@@ -1,26 +1,24 @@
 name: Call sub test
-on: 
-  workflow_dispatch:
-    inputs:
-      tag:
-        description: input shaka tag
-        required: true
-        type: string
+on:
+  push:
+    branches:
+      - main
 jobs:
-  callsub:
-    uses: ./.github/workflows/sub.yml
-    with:
-      BUILD_NAME: ${{ github.event.inputs.tag }}
   build:
-    needs: callsub
     runs-on: ubuntu-latest
     env:
       TZ: 'Asia/Tokyo'
     steps:
+      - name: checkout
+        uses: actions/checkout@v4
+      - name: callsub
+        uses: ./.github/workflows/sub.yml
+        with:
+          BUILD_NAME: ${{ github.ref_name }}
       - name: Download artifact
         uses: actions/download-artifact@v4
         with:
-          name: ${{ github.event.inputs.tag }}
+          name: ${{ github.ref_name }}
       - name: show artifact
         run: |
           ls -l
