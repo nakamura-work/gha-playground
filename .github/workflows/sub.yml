@@ -1,0 +1,27 @@
+name: Sub workflow
+on: 
+  workflow_call:
+    inputs:
+      tag:
+        description: input shaka tag
+        required: true
+        type: string
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      TZ: 'Asia/Tokyo'
+      TAG: ${{ github.event.inputs.tag }}
+    steps:
+      - name: echo via env
+        run: |
+          echo $TAG > tag.txt
+      - name: echo tag
+        run: |
+          echo ${{ github.event.inputs.tag }} > tag.txt
+      - name: Archive artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ github.event.inputs.tag }}
+          path: |
+            .
