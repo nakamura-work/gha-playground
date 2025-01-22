@@ -2,7 +2,7 @@ name: Sub workflow
 on: 
   workflow_call:
     inputs:
-      BUILD_NAME:
+      buildname:
         type: string
         required: true
         default: 'build'
@@ -11,19 +11,19 @@ jobs:
     runs-on: ubuntu-latest
     env:
       TZ: 'Asia/Tokyo'
-      ENV_BUILD_NAME: ${{ github.event.inputs.BUILD_NAME }}
+      ENV_BUILD_NAME: ${{ github.event.inputs.buildname }}
     steps:
       - name: echo via env
         run: |
-          echo ${{ github.event.inputs.BUILD_NAME }} > via_env.txt
+          echo ${{ github.event.inputs.buildname }} > via_env.txt
           echo $ENV_BUILD_NAME
       - name: echo context
         run: |
-          echo ${{ github.event.inputs.BUILD_NAME }} > via_context.txt
-          echo ${{ github.event.inputs.BUILD_NAME }}
+          echo ${{ github.event.inputs.buildname }} > via_context.txt
+          echo ${{ github.event.inputs.buildname }}
       - name: Archive artifact
         uses: actions/upload-artifact@v4
         with:
-          name: ${{ github.event.inputs.BUILD_NAME }}
+          name: ${{ github.event.inputs.buildname }}
           path: |
             .
