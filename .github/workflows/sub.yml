@@ -3,7 +3,6 @@ on:
   workflow_call:
     inputs:
       tag:
-        description: input shaka tag
         required: true
         type: string
 jobs:

@@ -17,6 +17,12 @@ jobs:
     env:
       TZ: 'Asia/Tokyo'
     steps:
-      - name: Call sub
+      - name: Download artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: ${{ github.event.inputs.tag }}
+      - name: show artifact
         run: |
-          echo ${{ github.event.inputs.tag }}
+          ls -l
+          cat via_env.txt
+          cat via_context.txt
