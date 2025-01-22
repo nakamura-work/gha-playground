@@ -11,19 +11,19 @@ jobs:
     runs-on: ubuntu-latest
     env:
       TZ: 'Asia/Tokyo'
-      ENV_BUILD_NAME: ${{ github.event.inputs.BUILD_NAME }}
+      ENV_BUILD_NAME: ${{ inputs.BUILD_NAME }}
     steps:
       - name: echo via env
         run: |
-          echo ${{ github.event.inputs.BUILD_NAME }} > via_env.txt
+          echo ${{ inputs.BUILD_NAME }} > via_env.txt
           echo $ENV_BUILD_NAME
       - name: echo context
         run: |
-          echo ${{ github.event.inputs.BUILD_NAME }} > via_context.txt
-          echo ${{ github.event.inputs.BUILD_NAME }}
+          echo ${{ inputs.BUILD_NAME }} > via_context.txt
+          echo ${{ inputs.BUILD_NAME }}
       - name: Archive artifact
         uses: actions/upload-artifact@v4
         with:
-          name: ${{ github.event.inputs.BUILD_NAME }}
+          name: ${{ inputs.BUILD_NAME }}
           path: |
             .
