@@ -3,20 +3,20 @@ on:
   workflow_call:
     inputs:
       tag:
-        type: string
         required: true
+        type: string
 jobs:
   build:
     runs-on: ubuntu-latest
     env:
       TZ: 'Asia/Tokyo'
-      ENV_BUILD_NAME: ${{ github.event.inputs.tag }}
+      TAG: ${{ github.event.inputs.tag }}
     steps:
       - name: echo via env
         run: |
           echo ${{ github.event.inputs.tag }} > via_env.txt
-          echo $ENV_BUILD_NAME
-      - name: echo context
+          echo $TAG
+      - name: echo tag
         run: |
           echo ${{ github.event.inputs.tag }} > via_context.txt
           echo ${{ github.event.inputs.tag }}
