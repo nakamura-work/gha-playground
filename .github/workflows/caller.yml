@@ -3,11 +3,13 @@ on:
   push:
     branches:
       - main
+      - develop-*
   create:
 jobs:
   callsub:
     if:
-      contains( github.ref_name, 'develop-' )
+      contains( github.ref_name, 'develop-' ) ||
+      contains( github.ref_name, 'main' )
     uses: ./.github/workflows/sub.yml
     with:
       BUILD_NAME: ${{ github.ref_name }}
