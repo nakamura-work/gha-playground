@@ -21,9 +21,13 @@ jobs:
         run: |
           echo ${{ inputs.BUILD_NAME }} > via_context.txt
           echo ${{ inputs.BUILD_NAME }}
+      - name: escape build name
+        id: escape_build_name
+        run: |
+          echo "value=$(echo '${{ inputs.BUILD_NAME }}' | sed 's/\//-/g')" >> $GITHUB_OUTPUT
       - name: Archive artifact
         uses: actions/upload-artifact@v4
         with:
-          name: ${{ inputs.BUILD_NAME }}
+          name: ${{ steps.escape_build_name.outputs.value }}
           path: |
             .

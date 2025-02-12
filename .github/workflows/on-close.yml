@@ -1,0 +1,19 @@
+name: Clean deleted branch
+on:
+  delete:
+    branches:
+      - develop-*
+  pull_request:
+    types:
+      - closed
+jobs:
+  clean:
+    if: |
+      ((github.event_name == 'pull_request') &&
+        contains(github.event.pull_request.labels.*.name, 'preview on devsite')) ||
+      (github.event_name == 'delete')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Remove artifact
+        run: |
+          echo 'remove artifact ${{ github.ref_name }}'          
