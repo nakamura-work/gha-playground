@@ -4,6 +4,10 @@ on:
     branches:
       - main
       - develop-*
+    tags:
+      - 'v*-alpha*'
+      - 'v*-beta*'
+      - 'v*-rc*'
   create:
 jobs:
   callsub:
